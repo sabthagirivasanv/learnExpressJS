@@ -3,7 +3,8 @@ const {logger} = require('./middleware/logEvents');
 const cors = require('cors');
 const path = require('path');
 const PORT = process.env.PORT || 8080;
-
+const verifyJWT = require('./middleware/verifyJWT');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -17,14 +18,22 @@ app.use(express.urlencoded({extended:false}));
 
 app.use(express.json());
 
+app.use(cookieParser());
+
 //serving static content in root directory:
 app.use('/',express.static(path.join(__dirname)));
 
 //configuring routes:
 app.use('/', require('./routes/root'));
-app.use('/employees', require('./routes/api/employee'));
 app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'));
+app.use('/refresh', require('./routes/refresh'));
+app.use('/logout', require('./routes/logout'));
+
+
+//API ROUTES:
+app.use(verifyJWT);
+app.use('/employees', require('./routes/api/employee'));
 
 app.all('*', (req, res) => {
     res.status(404);
