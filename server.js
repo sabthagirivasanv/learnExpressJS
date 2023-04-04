@@ -17,20 +17,20 @@ app.use(express.urlencoded({extended:false}));
 
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname)));
-app.get('^/$|/index(.html)?',(req, res)=> {
-    //res.sendFile('./views/index.html',{root: __dirname});
-    res.sendFile(path.join(__dirname, 'views', 'index.html'));
-})
+//serving static cohtent in root directory:
+app.use('/',express.static(path.join(__dirname)));
+//serving static cohtent in subdirectory:
+app.use('/subdir',express.static(path.join(__dirname)));
 
-app.get('/new-page(.html)?',(req, res)=> {
-    res.sendFile(path.join(__dirname, 'views', 'new-page.html'));
-})
 
-app.get('/old-page(.html)?',(req, res)=> {
-    //res.sendFile(path.join(__dirname, 'views', 'new-page.html'));
-    res.redirect(301,'/new-page');
-})
+//configuring routes of root directory:
+app.use('/', require('./routes/root'));
+
+//configuring routes of subdirectories:
+app.use('/subdir', require('./routes/subdir'));
+
+//configuring routes of employee apis:
+app.use('/employees', require('./routes/api/employee'));
 
 app.all('*', (req, res) => {
     res.status(404);
