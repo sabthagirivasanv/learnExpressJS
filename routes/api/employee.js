@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const data = {};
-
-data.employees = require('./../../data/employees.json');
+const employeeController = require('../../controllers/employeeController');
 
 
-router.route('/').get((req, res) => {
-    res.json(data.employees);
-})
+router.route('/')
+    .get(employeeController.getAllEmployees)
+    .post(employeeController.postEmployee)
 
 
 module.exports = router;

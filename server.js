@@ -17,20 +17,14 @@ app.use(express.urlencoded({extended:false}));
 
 app.use(express.json());
 
-//serving static cohtent in root directory:
+//serving static content in root directory:
 app.use('/',express.static(path.join(__dirname)));
-//serving static cohtent in subdirectory:
-app.use('/subdir',express.static(path.join(__dirname)));
 
-
-//configuring routes of root directory:
+//configuring routes:
 app.use('/', require('./routes/root'));
-
-//configuring routes of subdirectories:
-app.use('/subdir', require('./routes/subdir'));
-
-//configuring routes of employee apis:
 app.use('/employees', require('./routes/api/employee'));
+app.use('/register', require('./routes/register'));
+app.use('/auth', require('./routes/auth'));
 
 app.all('*', (req, res) => {
     res.status(404);
