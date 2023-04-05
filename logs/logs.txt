@@ -211,3 +211,14 @@
 2023-33-04 05:33:02	9faf1fd7-7bcc-4dcd-b852-7ff49ea6cafb	GET	undefined	/refresh
 2023-33-04 05:33:05	299777b2-795e-430e-a091-64777440d8cf	GET	undefined	/employees
 2023-33-04 05:33:06	bde30fa1-ae04-4d4f-b0be-7fcae7023e8e	GET	undefined	/employees
+2023-52-05 01:52:16	70551aef-3e8f-4312-a8df-3c444a5f6f9a	POST	undefined	/register
+2023-52-05 01:52:23	c874fe8c-72d7-439a-a9f8-c0051cce3232	POST	undefined	/register
+2023-52-05 01:52:28	707fe1eb-0e21-4e9c-a097-ab0a1ca740a4	POST	undefined	/register
+2023-52-05 01:52:31	f73946af-6b73-4730-b903-a4b2414eb2b4	POST	undefined	/register
+2023-13-05 02:13:09	b98a8b50-0019-4421-ae8b-960c6b2dc5a2	POST	undefined	/register
+2023-19-05 02:19:55	1fa6b80b-0c8a-455a-aabf-42d886b581b4	POST	undefined	/register
+2023-20-05 02:20:04	d1d8ebd2-d47d-416d-97c5-67dbcee38535	POST	undefined	/register
+2023-20-05 02:20:13	2283bf2d-4078-4d45-a915-c0bc1e97d315	POST	undefined	/register
+2023-20-05 02:20:14	64c37fe8-3f52-46e3-82af-5a6cc6b55d99	POST	undefined	/register
+2023-27-05 02:27:19	b06b19ae-560a-4fd6-b5a0-3cee15f27995	POST	undefined	/register
+2023-27-05 02:27:45	760d13d2-9f10-415b-8ab4-951ceb2674fd	POST	undefined	/register
