@@ -1,19 +1,14 @@
 const bcrypt = require('bcrypt');
-const path = require('path');
-const fsPromises = require('fs').promises;
 const jwt = require('jsonwebtoken');
 
-const usersDB = {
-    users: require('../model/users.json'),
-    setUsers: function (users){this.users = users;}
-}
+const User = require('../model/User');
 
 const handleLogin = async (req, res) => {
     const {user, pwd} = req.body;
     if (!user || !pwd) {
         return res.status(400).json({'message': 'Username and password required...'});
     }
-    const existingUser = usersDB.users.find(each => each.username === user);
+    const existingUser = await User.findOne({username: user}).exec();
     if (!existingUser){
         return res.sendStatus(401);
     }
@@ -29,21 +24,16 @@ const handleLogin = async (req, res) => {
                         }
                     },
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '60s'});
+            {expiresIn: '300s'});
 
         const refreshToken = jwt.sign(
             {"username": existingUser.username},
             process.env.REFRESH_TOKEN_SECRET,
             {expiresIn: '1d'});
 
-        //saving refresh token of current user with all other users.
-        const otherUsers = usersDB.users.filter(each => each.username !== existingUser.username);
-        const currentUser = {...existingUser, refreshToken};
-        usersDB.setUsers([...otherUsers, currentUser]);
-
-        await fsPromises.writeFile(
-            path.join(__dirname, '..', 'model', 'users.json'),
-            JSON.stringify(usersDB.users));
+        //updating the refresh token of the found user:
+        existingUser.refreshToken = refreshToken;
+        const result = await existingUser.save();
 
         res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
         res.json({accessToken});

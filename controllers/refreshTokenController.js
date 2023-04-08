@@ -1,9 +1,5 @@
 const jwt = require('jsonwebtoken');
-
-const usersDB = {
-    users: require('../model/users.json'),
-    setUsers: function (users){this.users = users;}
-}
+const User = require('../model/User');
 
 const handleRefreshToken = async (req, res) => {
     const cookies = req.cookies;
@@ -11,7 +7,7 @@ const handleRefreshToken = async (req, res) => {
         return res.sendStatus(401);
     }
     const refreshToken = cookies.jwt;
-    const existingUser = usersDB.users.find(each => each.refreshToken === refreshToken);
+    const existingUser = await User.findOne({refreshToken: refreshToken}).exec();
     if (!existingUser){
         return res.sendStatus(403);
     }
@@ -28,7 +24,7 @@ const handleRefreshToken = async (req, res) => {
                         }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '60s'});
+                {expiresIn: '300s'});
                 res.json({accessToken});
         });
 
