@@ -7,6 +7,9 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=CompanyDB
+    volumes:
+      - mongo-data:/data/db
   mongo-db-gui:
     image: mongo-express
     ports:
@@ -15,3 +18,15 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
       - ME_CONFIG_MONGODB_SERVER=mongo-db
+    depends_on:
+      - mongo-db
+    links:
+      - mongo-db
+  learn-express-js:
+    image: 018943989242.dkr.ecr.us-east-1.amazonaws.com/learn-express-js:1.1
+    ports:
+      - 8080:8080
+
+volumes:
+  mongo-data:
+    driver: local

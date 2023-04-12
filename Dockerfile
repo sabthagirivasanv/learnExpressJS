@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:19-alpine3.16
 
 #environmental variables:
 ENV MONGO_DB_USERNAME=admin \
